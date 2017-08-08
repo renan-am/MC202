@@ -1,3 +1,6 @@
+// Aluno: Renan Clarindo Amorim
+// RA: 186454
+
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -16,6 +19,7 @@ int main (){
         return 1;
     }
 
+// aloca memoria
     for (i = 0; i < ordem; i++){
         M[i] = malloc((i+1)*sizeof(double));
             if (!M[i]){
@@ -40,17 +44,17 @@ int main (){
         }
     }
 
-    media = total/((ordem^2+ordem)/2);
+    media = total/(((ordem*ordem)+ordem)/2);
 
 //somatorio do valor interno a raiz do desvio padrao
     for (i = 0; i < ordem; i++){
         for (j = 0; j < i+1; j++){
-            aux = media - M[i][j];
+            aux = M[i][j] - media;
             soma_aux = soma_aux + pow(aux, 2);
         }
     }
 
-    aux = soma_aux/((ordem^2+ordem)/2);
+    aux = soma_aux/(((ordem*ordem)+ordem)/2);
     desvio_padrao = sqrt(aux);
 
 //normaliza a funcao
@@ -68,5 +72,13 @@ int main (){
         }
         printf ("\n");
     }
+// imprime media desvio_padrao
+    printf("\n%.12lf %.12lf \n", media, desvio_padrao);
 
+// liberar memoria
+    for (i = 0; i < ordem; i++)
+        free (M[i]);
+
+    free (M);
+return 0;
 }
