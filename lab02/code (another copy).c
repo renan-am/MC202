@@ -58,7 +58,7 @@ void liberar (NO **lista){
 
 int main(){
 
-    int i = 0, tam_lista = 0, qtd_requisicoes = 0, custo = 0, custo_total = 0, mtf = 0, transp = 0, count = 0;
+    int i = 0, tam_lista = 0, qtd_requisicoes = 0, custo = 0, custo_total = 0, mtf = 0, transp = 0, count = 0, temp = 0;
     int *requisicoes = NULL;
     NO *j = NULL, *j_ant = NULL, *j_ant2 = NULL, *lista = NULL, *aux = NULL;
 
@@ -67,9 +67,10 @@ int main(){
     //qtd_requisicoes++;
     requisicoes = malloc (qtd_requisicoes*sizeof(int));
 
-    for (i = 0; i < qtd_requisicoes; i++){
-        scanf("%d", &requisicoes[i]);
+    while (scanf("%d", &requisicoes[i]) != EOF){
+        i++;
     }
+    qtd_requisicoes = i;
 
     for (i = tam_lista; i > 0; i--){
         if (adicionar (&lista, i) == 1){
@@ -77,11 +78,6 @@ int main(){
         }
     }
 
-
-    if (qtd_requisicoes > 10000 || qtd_requisicoes < 0 || tam_lista < 0 || tam_lista > 10000){
-        printf ("0 0 0\n");
-        return 0;
-    }
 
 
     // MTF
