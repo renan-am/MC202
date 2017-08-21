@@ -3,24 +3,25 @@
 #include <string.h>
 #include "lista.h"
 
-int inicializar_disco (DISCO **disco, int tamanho){
+DISCO *inicializar_disco (int tamanho){
 	
-	//incializa disco
-	*disco = malloc(sizeof(DISCO));
+	DISCO *disco = NULL;
 
-	if (*disco == NULL)
-
-	(*disco)->tamanho_total = tamanho;
-	(*disco)->inicio = NULL;
-	(*disco)->prim_livre = NULL;
+	disco = malloc(sizeof(DISCO));
+	disco->tamanho_total = tamanho;
+	disco->inicio = NULL;
 
 	//cria um bloco representando o espaço livre
 	BLOCO *inicial = NULL;
+
 	inicial = malloc(sizeof(BLOCO));
 	strcpy(inicial->nome, "livre");
 	inicial->tamanho = tamanho;
+	inicial->prox = NULL;
+	inicial->ant = NULL;
 
 
-	(*disco)->inicio = inicial;
-	return 0;
+	disco->inicio = inicial;
+
+	return disco;
 }
