@@ -34,10 +34,11 @@ int converter_tamanho(char tamanho[]){
 int main (){
 	DISCO *disco;
 	int tam_disco, testes, i, tam_bloco, flag;
-	int espacos[8];
+	
 	char nome[15], acao[10], tamanho[10], tamanho_disco[10];
 
 	while (1){
+		int espacos[8] = {100,100,100,100,100,100,100,100};
 		flag = 0;
 		scanf ("%d", &testes);
 		if (!testes){
@@ -59,10 +60,10 @@ int main (){
 
 				if ((adicionar_bloco(disco, nome, tam_bloco)) != 0){
 					otimiza(disco);
-					if ((adicionar_bloco(disco, nome, tam_bloco)) != 0){
+					if ((adicionar_bloco(disco, nome, tam_bloco)) != 0 && flag != 1){
 						printf ("ERRO: disco cheio\n");
 						flag = 1;
-						break;
+						continue;
 					}
 				}
 			} 
@@ -84,11 +85,11 @@ int main (){
 
 		for (i = 0; i < 8; i++){
 			if (espacos[i] > 75){
-				printf ("[#]");
+				printf("[ ]");
 			} else if (espacos[i] > 25){
 				printf ("[-]");
 			} else {
-				printf("[ ]");
+				printf ("[#]");
 			}
 		}
 		printf ("\n");
@@ -96,6 +97,7 @@ int main (){
 		liberar(&disco);
 	}
 
+	return 0;
 	
 }
 

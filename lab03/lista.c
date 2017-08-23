@@ -189,6 +189,7 @@ void liberar (DISCO **disco){
 
 void porcentagem_disco (DISCO *disco, int espacos[]){
 	BLOCO *i = NULL;
+	float aux = 0.0;
 	int j = 0;
 	int tam_vazio_sobra = 0, tam_ocupado_sobra = 0;
 	int tam_vazio = 0, tam_ocupado = 0, tam_parte = 0;
@@ -213,7 +214,8 @@ void porcentagem_disco (DISCO *disco, int espacos[]){
 			}
 
 			if (tam_vazio + tam_ocupado == tam_parte){
-				espacos[j] = (tam_vazio*100)/(tam_vazio+tam_ocupado+1);
+				aux = 100*(float)tam_vazio/tam_parte;
+				espacos[j] = aux;
 				tam_vazio = tam_vazio_sobra;
 				tam_ocupado = tam_ocupado_sobra;
 			}
