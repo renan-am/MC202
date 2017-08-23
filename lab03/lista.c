@@ -196,30 +196,52 @@ void porcentagem_disco (DISCO *disco, int espacos[]){
 
 	tam_parte = (disco->tamanho_total)/8;
 
+	//imprimir_lista(disco);
 
-	for (j = 0; j < 8; j++){
-		for (i = disco->inicio; i != NULL; i=i->prox){
-			if (strcmp(i->nome, "livre") == 0){
-				tam_vazio += i->tamanho;
-					if (tam_vazio + tam_ocupado > tam_parte){
-						tam_vazio_sobra = (tam_vazio + tam_ocupado) - tam_parte;
-						tam_vazio -= tam_vazio_sobra;
-					}
-			} else {
-				tam_ocupado += i->tamanho;
-					if (tam_vazio + tam_ocupado > tam_parte){
-						tam_ocupado_sobra = (tam_vazio + tam_ocupado) - tam_parte;
-						tam_ocupado -= tam_ocupado_sobra;
-					}
-			}
+	for (i = disco->inicio->prox; i != NULL; i=i->prox){
+		if (strcmp(i->nome, "livre") == 0){
+			tam_vazio += i->tamanho;
+				if (tam_vazio + tam_ocupado > tam_parte){
+					tam_vazio_sobra = tam_vazio + tam_ocupado - tam_parte;
+					tam_vazio -= tam_vazio_sobra;
+				}
+		} else {
+			tam_ocupado += i->tamanho;
+				if (tam_vazio + tam_ocupado > tam_parte){
+					tam_ocupado_sobra = tam_vazio + tam_ocupado - tam_parte;
+					tam_ocupado -= tam_ocupado_sobra;
+				}
+		}
+				//printf ("ENTROU = > v_sobra = %d e o_sobra = %d\n",tam_vazio_sobra, tam_ocupado_sobra);
+		if (tam_vazio + tam_ocupado == tam_parte){
+			do{
+				aux = (float)tam_vazio/tam_parte;
+				espacos[j] = 100*aux;
+				//printf ("tam_vazio = %d,     tam_ocupado= %d\n", tam_vazio, tam_ocupado);
+				//printf ("espacos = %d e aux = %f\n", espacos[j], aux);
+				//printf ("v_sobra = %d e o_sobra = %d\n",tam_vazio_sobra, tam_ocupado_sobra);
 
-			if (tam_vazio + tam_ocupado == tam_parte){
-				aux = 100*(float)tam_vazio/tam_parte;
-				espacos[j] = aux;
-				tam_vazio = tam_vazio_sobra;
-				tam_ocupado = tam_ocupado_sobra;
-			}
+				j++;
 
+				if (tam_vazio_sobra >= tam_parte){
+					tam_vazio = tam_parte;
+					tam_vazio_sobra -= tam_parte;
+				} else {
+					tam_vazio = tam_vazio_sobra;
+					tam_vazio_sobra = 0;
+				}
+
+				if (tam_ocupado_sobra >= tam_parte){
+					tam_ocupado = tam_parte;
+					tam_ocupado_sobra -= tam_parte;
+				} else {
+					tam_ocupado = tam_vazio_sobra;
+					tam_ocupado_sobra = 0;
+				}
+				//printf ("v_sobra = %d e o_sobra = %d\n%d     %d\n",tam_vazio_sobra, tam_ocupado_sobra, tam_vazio, tam_ocupado);
+
+			}while (tam_vazio + tam_ocupado >= tam_parte && j < 8);
 		}
 	}
+	
 }

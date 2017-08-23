@@ -4,7 +4,7 @@
 #include "lista.h"
 
 //REMOVER
-#include "lista.c"
+//#include "lista.c"
 
 
 int converter_tamanho(char tamanho[]){

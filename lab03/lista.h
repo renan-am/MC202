@@ -16,7 +16,22 @@ typedef struct DISCO {
 
 } DISCO;
 
+
+DISCO *inicializar_disco (int tamanho);
+
+int adicionar_bloco (DISCO *disco, char nome[],int tam_adic);
+
+void concatena_livre (BLOCO *alvo);
+
+int remover_bloco (DISCO *disco, char nome[]);
+
+int otimiza (DISCO *disco);
+
 void imprimir_lista (DISCO *disco);
+
+void liberar (DISCO **disco);
+
+void porcentagem_disco (DISCO *disco, int espacos[]);
 
 
 #endif
