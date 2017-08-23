@@ -76,33 +76,40 @@ int adicionar_bloco (DISCO *disco, char nome[],int tam_adic){
 }
 
 
-void concatena_livre (BLOCO **alvo){
+void concatena_livre (BLOCO *alvo){
 	int prox_livre = 0, ant_livre = 0;
 
 
-		if ((*alvo)->prox != NULL && strcmp ((*alvo)->prox->nome, "livre") == 0)
+		if (alvo->prox != NULL && strcmp (alvo->prox->nome, "livre") == 0)
 			prox_livre = 1;
-		if (strcmp ((*alvo)->ant->nome, "livre") == 0)
+		if (strcmp (alvo->ant->nome, "livre") == 0)
 			ant_livre = 1;
-	
+		
 
 		if (prox_livre == 1 && ant_livre == 1){
-			(*alvo)->ant->tamanho = ((*alvo)->ant->tamanho) + ((*alvo)->prox->tamanho) + ((*alvo)->tamanho);
-			(*alvo)->ant->prox = (*alvo)->prox->prox;
-			free (*alvo);
+			alvo->ant->tamanho = (alvo->ant->tamanho) + (alvo->prox->tamanho) + (alvo->tamanho);
+			alvo->ant->prox = alvo->prox->prox;
+
+				if (alvo->prox->prox != NULL){
+					(alvo->prox->prox->ant = alvo->ant);
+				}
+
+			free (alvo->prox);
+			free (alvo);
 		} else if (prox_livre == 1 && ant_livre == 0){
-			(*alvo)->prox->tamanho = ((*alvo)->prox->tamanho) + ((*alvo)->tamanho);
-			(*alvo)->ant->prox = (*alvo)->prox;
-			(*alvo)->prox->ant = (*alvo)->ant;
-			free (*alvo);
+			alvo->prox->tamanho = (alvo->prox->tamanho) + (alvo->tamanho);
+			alvo->prox->ant = alvo->ant;	
+			alvo->ant->prox = alvo->prox;
+
+			free (alvo);
 		} else if (prox_livre == 0 && ant_livre == 1){
-			(*alvo)->ant->tamanho = ((*alvo)->ant->tamanho) + ((*alvo)->tamanho);
-			(*alvo)->ant->prox = (*alvo)->prox;
+			alvo->ant->tamanho = alvo->ant->tamanho + alvo->tamanho;
+			alvo->ant->prox = alvo->prox;
 
-				if ((*alvo)->prox != NULL)
-					(*alvo)->prox->ant = (*alvo)->ant;
+				if (alvo->prox != NULL)
+					alvo->prox->ant = alvo->ant;
 
-			free (*alvo);
+			free (alvo);
 		} else {
 			return;
 		}
@@ -116,7 +123,7 @@ int remover_bloco (DISCO *disco, char nome[]){
 
 	if (i != NULL){
 		strcpy(i->nome, "livre");
-		concatena_livre(&i);
+		concatena_livre(i);
 	}
 
 	return 0;
@@ -128,25 +135,41 @@ int otimiza (DISCO *disco){
 
 	for (i = disco->inicio->prox; i != NULL; i = i->prox){
 		if (strcmp(i->ant->nome, "livre") == 0){
+
+			if (i->prox != NULL){
+				i->prox->ant = i->ant;
+			}
+
 			i->ant->prox = i->prox;
 			i->prox = i->ant;
-			i->ant = i->ant->ant;
-			i->ant->ant = i;
-			imprimir_lista (disco);
-			concatena_livre (&(i->prox));
-			imprimir_lista (disco);
-			
+			i->ant = i->prox->ant;
+			i->ant->prox = i;
+			i->prox->ant = i;
+
+
+			concatena_livre(i->prox);
+
+
 		}
 	}
+	return 0;
 }
 
 void imprimir_lista (DISCO *disco){
 	BLOCO *i = NULL;
+	BLOCO *j = NULL;
+	for (i = disco->inicio; i != NULL; i=i->prox){
+		printf ("-%s %d-", i->nome, i->tamanho);
+		j = i;
+	}
 
-	for (i = disco->inicio; i != NULL; i=i->prox)
+	printf ("\n");
+
+	for (i = j; i != NULL; i=i->ant)
 		printf ("-%s %d-", i->nome, i->tamanho);
 
 	printf ("\n");
+
 }
 
 void liberar (DISCO **disco){
@@ -161,4 +184,40 @@ void liberar (DISCO **disco){
 
 	free (*disco);
 
+}
+
+
+void porcentagem_disco (DISCO *disco, int espacos[]){
+	BLOCO *i = NULL;
+	int j = 0;
+	int tam_vazio_sobra = 0, tam_ocupado_sobra = 0;
+	int tam_vazio = 0, tam_ocupado = 0, tam_parte = 0;
+
+	tam_parte = (disco->tamanho_total)/8;
+
+
+	for (j = 0; j < 8; j++){
+		for (i = disco->inicio; i != NULL; i=i->prox){
+			if (strcmp(i->nome, "livre") == 0){
+				tam_vazio += i->tamanho;
+					if (tam_vazio + tam_ocupado > tam_parte){
+						tam_vazio_sobra = (tam_vazio + tam_ocupado) - tam_parte;
+						tam_vazio -= tam_vazio_sobra;
+					}
+			} else {
+				tam_ocupado += i->tamanho;
+					if (tam_vazio + tam_ocupado > tam_parte){
+						tam_ocupado_sobra = (tam_vazio + tam_ocupado) - tam_parte;
+						tam_ocupado -= tam_ocupado_sobra;
+					}
+			}
+
+			if (tam_vazio + tam_ocupado == tam_parte){
+				espacos[j] = (tam_vazio*100)/(tam_vazio+tam_ocupado+1);
+				tam_vazio = tam_vazio_sobra;
+				tam_ocupado = tam_ocupado_sobra;
+			}
+
+		}
+	}
 }

@@ -27,20 +27,23 @@ int converter_tamanho(char tamanho[]){
 	} else if (strcmp(sufixo, "Gb") == 0) {
 		return (tam*1024*1024);
 	}
-
-
+	return 0;
 }
+
 
 int main (){
 	DISCO *disco;
-	int tam_disco, testes, i, tam_bloco;
+	int tam_disco, testes, i, tam_bloco, flag;
+	int espacos[8];
 	char nome[15], acao[10], tamanho[10], tamanho_disco[10];
 
 	while (1){
-		scanf (" %d", &testes);
+		flag = 0;
+		scanf ("%d", &testes);
 		if (!testes){
 			break;
 		}
+
 
 		scanf ("%s", tamanho_disco);
 		tam_disco = converter_tamanho(tamanho_disco);
@@ -48,27 +51,48 @@ int main (){
 
 		for (i = 0; i < testes; i++){
 			scanf ("%s", acao);
-			scanf ("%s", nome);
-			scanf ("%s", tamanho);
-			tam_bloco = converter_tamanho(tamanho);
 
 			if (strcmp(acao, "insere") == 0){
+				scanf ("%s", nome);
+				scanf ("%s", tamanho);
+				tam_bloco = converter_tamanho(tamanho);
 
 				if ((adicionar_bloco(disco, nome, tam_bloco)) != 0){
-					imprimir_lista(disco);
-
 					otimiza(disco);
-					imprimir_lista(disco);
 					if ((adicionar_bloco(disco, nome, tam_bloco)) != 0){
 						printf ("ERRO: disco cheio\n");
+						flag = 1;
+						break;
 					}
 				}
 			} 
 			else if (strcmp(acao, "remove") == 0){
+				scanf ("%s", nome);
 				remover_bloco(disco, nome);
+			} 
+			else if (strcmp(acao, "otimiza") == 0){
+				otimiza(disco);
 			}
 		}
-		imprimir_lista(disco);
+
+		if (flag){
+			liberar(&disco);
+			continue;
+		}
+
+		porcentagem_disco(disco, espacos);
+
+		for (i = 0; i < 8; i++){
+			if (espacos[i] > 75){
+				printf ("[#]");
+			} else if (espacos[i] > 25){
+				printf ("[-]");
+			} else {
+				printf("[ ]");
+			}
+		}
+		printf ("\n");
+
 		liberar(&disco);
 	}
 
