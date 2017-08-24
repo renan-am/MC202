@@ -222,7 +222,7 @@ void porcentagem_disco (DISCO *disco, int espacos[]){
 				//printf ("v_sobra = %d e o_sobra = %d\n",tam_vazio_sobra, tam_ocupado_sobra);
 
 				j++;
-
+				//printf ("antes - v_sobra = %d e o_sobra = %d\n%d     %d\n",tam_vazio_sobra, tam_ocupado_sobra, tam_vazio, tam_ocupado);
 				if (tam_vazio_sobra >= tam_parte){
 					tam_vazio = tam_parte;
 					tam_vazio_sobra -= tam_parte;
@@ -235,10 +235,10 @@ void porcentagem_disco (DISCO *disco, int espacos[]){
 					tam_ocupado = tam_parte;
 					tam_ocupado_sobra -= tam_parte;
 				} else {
-					tam_ocupado = tam_vazio_sobra;
+					tam_ocupado = tam_ocupado_sobra;
 					tam_ocupado_sobra = 0;
 				}
-				//printf ("v_sobra = %d e o_sobra = %d\n%d     %d\n",tam_vazio_sobra, tam_ocupado_sobra, tam_vazio, tam_ocupado);
+				//printf ("depois - v_sobra = %d e o_sobra = %d\n%d     %d\n",tam_vazio_sobra, tam_ocupado_sobra, tam_vazio, tam_ocupado);
 
 			}while (tam_vazio + tam_ocupado >= tam_parte && j < 8);
 		}
