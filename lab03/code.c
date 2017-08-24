@@ -38,7 +38,7 @@ int main (){
 	char nome[15], acao[10], tamanho[10], tamanho_disco[10];
 
 	while (1){
-		int espacos[8] = {100,100,100,100,100,100,100,100};
+		double espacos[8] = {100,100,100,100,100,100,100,100};
 		flag = 0;
 		scanf ("%d", &testes);
 		if (!testes){
@@ -84,9 +84,9 @@ int main (){
 		porcentagem_disco(disco, espacos);
 
 		for (i = 0; i < 8; i++){
-			if (espacos[i] > 75){
+			if (espacos[i] > 0.75){
 				printf("[ ]");
-			} else if (espacos[i] > 25){
+			} else if (espacos[i] > 0.25){
 				printf ("[-]");
 			} else {
 				printf ("[#]");

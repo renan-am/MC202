@@ -187,9 +187,9 @@ void liberar (DISCO **disco){
 }
 
 
-void porcentagem_disco (DISCO *disco, int espacos[]){
+void porcentagem_disco (DISCO *disco, double espacos[]){
 	BLOCO *i = NULL;
-	float aux = 0.0;
+	double aux = 0.0;
 	int j = 0;
 	int tam_vazio_sobra = 0, tam_ocupado_sobra = 0;
 	int tam_vazio = 0, tam_ocupado = 0, tam_parte = 0;
@@ -215,8 +215,7 @@ void porcentagem_disco (DISCO *disco, int espacos[]){
 				//printf ("ENTROU = > v_sobra = %d e o_sobra = %d\n",tam_vazio_sobra, tam_ocupado_sobra);
 		if (tam_vazio + tam_ocupado == tam_parte){
 			do{
-				aux = (float)tam_vazio/tam_parte;
-				espacos[j] = 100*aux;
+				espacos[j] = (double)tam_vazio/tam_parte;
 				//printf ("tam_vazio = %d,     tam_ocupado= %d\n", tam_vazio, tam_ocupado);
 				//printf ("espacos = %d e aux = %f\n", espacos[j], aux);
 				//printf ("v_sobra = %d e o_sobra = %d\n",tam_vazio_sobra, tam_ocupado_sobra);
