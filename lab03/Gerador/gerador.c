@@ -16,7 +16,7 @@ int main (){
 
 	strcpy(suf[0], "Kb");
 	strcpy(suf[1], "Mb");
-	strcpy(suf[2], "Gb");
+	strcpy(suf[2], "Mb");
 
 	int qtd = 0;
 	scanf ("%d", &qtd);
@@ -46,9 +46,10 @@ int main (){
 	char tamanho[10];
 	char sufixo[10];
 
+
+//ALTERA ISSO AQUI PRO DISCO TER UM TAMANHO DECENTE
 	tamanhoDisco = (rand()%128 + 1)*8;
-	indice = rand()%3;
-	strcpy(sufixo, suf[indice]);
+	strcpy(sufixo, "Gb");
 
 	printf("%d\n%d%s\n", qtd,tamanhoDisco,sufixo);
 
@@ -72,13 +73,16 @@ int main (){
 			}
 			hist[count] = nome;
 			count++;
+			
+//ISSO AQUI CRIA O TAMANHO DOS ARQUIVOS
 			tam = rand()%1024 + 1;
 			indice = rand()%3;
 			strcpy(sufixo, suf[indice]);
 			printf ("%s %s %d%s\n",acao, arquivo, tam, sufixo);
 			strcpy(arquivo, "");
 		} else if (strcmp(acao, "remove") == 0){
-			indice = rand()%qtd;
+			
+			indice = rand()%(count+1);
 			nome = hist[indice];
 			sprintf(arquivo, "%d", nome);
 			printf ("%s %s \n", acao, arquivo);

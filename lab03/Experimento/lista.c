@@ -56,22 +56,16 @@ int adicionar_bloco (DISCO *disco, char nome[],int tam_adic){
 		return 1;
 	}
 
-	BLOCO *novo = NULL;
-	novo = malloc(sizeof(BLOCO));
-
-	strcpy(novo->nome, nome);
-	novo->tamanho = tam_adic;
-	novo->ant = menor->ant;
-	menor->ant->prox = novo;
-
 	if (menor->tamanho - tam_adic == 0){
-		novo->prox = menor->prox;
-
-			if (menor->prox != NULL)
-				menor->prox->ant = novo;
-
-		free (menor);
+		strcpy(menor->nome, nome);
 	} else {
+		BLOCO *novo = NULL;
+		novo = malloc(sizeof(BLOCO));
+		strcpy(novo->nome, nome);
+		novo->tamanho = tam_adic;
+		
+		novo->ant = menor->ant;
+		menor->ant->prox = novo;
 		novo->prox = menor;
 		menor->tamanho = menor->tamanho - tam_adic;
 		menor->ant = novo;
@@ -189,7 +183,7 @@ void liberar (DISCO **disco){
 		free (j);
 		j = i;
 	}
-
+	free (j);
 	free (*disco);
 
 }

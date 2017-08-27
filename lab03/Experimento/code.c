@@ -36,9 +36,9 @@ int main (){
 	int tam_disco, testes, i, tam_bloco, flag;
 	
 	char nome[15], acao[10], tamanho[10], tamanho_disco[10];
+	double espacos[8] = {100,100,100,100,100,100,100,100};
 
 	while (1){
-		double espacos[8] = {100,100,100,100,100,100,100,100};
 		flag = 0;
 		scanf ("%d", &testes);
 		if (!testes){

@@ -181,7 +181,7 @@ void liberar (DISCO **disco){
 		free (j);
 		j = i;
 	}
-
+	free (j);
 	free (*disco);
 
 }
