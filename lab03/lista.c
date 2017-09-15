@@ -165,11 +165,11 @@ void imprimir_lista (DISCO *disco){
 
 	printf ("\n");
 
-	for (i = j; i != NULL; i=i->ant)
+/*	for (i = j; i != NULL; i=i->ant)
 		printf ("-%s %d-", i->nome, i->tamanho);
 
 	printf ("\n");
-
+*/
 }
 
 void liberar (DISCO **disco){

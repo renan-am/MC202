@@ -49,9 +49,10 @@ int main (){
 		scanf ("%s", tamanho_disco);
 		tam_disco = converter_tamanho(tamanho_disco);
 		disco = inicializar_disco(tam_disco);
-
+		//imprimir_lista(disco);
 		for (i = 0; i < testes; i++){
 			scanf ("%s", acao);
+			//imprimir_lista(disco);
 
 			if (strcmp(acao, "insere") == 0){
 				scanf ("%s", nome);
@@ -74,8 +75,9 @@ int main (){
 			else if (strcmp(acao, "otimiza") == 0){
 				otimiza(disco);
 			}
-		}
+		imprimir_lista(disco);
 
+		}
 		if (flag){
 			liberar(&disco);
 			continue;
