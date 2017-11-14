@@ -31,7 +31,7 @@ void imprimir_lista (DISCO *disco);
 
 void liberar (DISCO **disco);
 
-void porcentagem_disco (DISCO *disco, int espacos[]);
+void porcentagem_disco (DISCO *disco, double espacos[]);
 
 
 #endif
